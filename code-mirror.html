@@ -1,27 +1,5 @@
 <link rel="import" href="../polymer/polymer.html">
 <link rel="import" href="code-mirror-import.html">
-<link rel="stylesheet" href="../codemirror/lib/codemirror.css">
-<link rel="stylesheet" href="../codemirror/theme/monokai.css">
-<link rel="stylesheet" href="../codemirror/lib/codemirror.css">
-<link rel="stylesheet" href="../codemirror/theme/ambiance.css">
-<link rel="stylesheet" href="../codemirror/theme/ambiance-mobile.css">
-<link rel="stylesheet" href="../codemirror/theme/blackboard.css">
-<link rel="stylesheet" href="../codemirror/theme/cobalt.css">
-<link rel="stylesheet" href="../codemirror/theme/eclipse.css">
-<link rel="stylesheet" href="../codemirror/theme/elegant.css">
-<link rel="stylesheet" href="../codemirror/theme/erlang-dark.css">
-<link rel="stylesheet" href="../codemirror/theme/lesser-dark.css">
-<link rel="stylesheet" href="../codemirror/theme/midnight.css">
-<link rel="stylesheet" href="../codemirror/theme/monokai.css">
-<link rel="stylesheet" href="../codemirror/theme/neat.css">
-<link rel="stylesheet" href="../codemirror/theme/night.css">
-<link rel="stylesheet" href="../codemirror/theme/rubyblue.css">
-<link rel="stylesheet" href="../codemirror/theme/solarized.css">
-<link rel="stylesheet" href="../codemirror/theme/twilight.css">
-<link rel="stylesheet" href="../codemirror/theme/vibrant-ink.css">
-<link rel="stylesheet" href="../codemirror/theme/xq-dark.css">
-<link rel="stylesheet" href="../codemirror/theme/xq-light.css">
-<link rel="stylesheet" href="../codemirror/addon/fold/foldgutter.css">
 
 <!--
 `code-mirror` is a polymer element wrapping the codemirror text editor.
@@ -41,15 +19,6 @@ Example:
 
     :host {
       display: block;
-      position: relative;
-    }
-
-    .CodeMirror {
-      position: absolute;
-      top: 0;
-      left: 0;
-      height: 100%;
-      width: 100%;
     }
 
   </style>
@@ -68,27 +37,32 @@ Example:
 
       value: {
         type: String,
-        value: ''
+        value: '',
+        observer: '_valueChanged'
       },
 
       mode: {
         type: String,
-        value: 'htmlmixed'
+        value: 'htmlmixed',
+        observer: '_modeChanged'
       },
 
       theme: {
         type: String,
-        value: 'xq-light'
+        value: 'xq-light',
+        observer: '_themeChanged'
       },
 
       tabSize: {
         type: Number,
-        value: 2
+        value: 2,
+        observer: '_tabSizeChanged'
       },
 
       lineNumbers: {
         type: Boolean,
-        value: false
+        value: true,
+        observer: '_lineNumbersChanged'
       }
 
     },
@@ -100,8 +74,9 @@ Example:
         theme: this.theme,
         tabSize: this.tabSize,
         lineNumbers: this.lineNumbers,
-        foldGutter: true,
-        gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"]
+        autofocus: true,
+        keyMap: 'sublime',
+        gutters: ['CodeMirror-linenumbers']
       });
 
     },
@@ -110,28 +85,33 @@ Example:
       this.mirror.refresh();
     },
 
-    valueChanged: function() {
+    focus: function() {
+      this.mirror.focus();
+    },
+
+    _valueChanged: function() {
+      if (!this.mirror) {return;}
       this.mirror.setValue(this.value);
     },
 
-    modeChanged: function() {
+    _modeChanged: function() {
+      if (!this.mirror) {return;}
       this.mirror.setOption('mode', this.mode);
     },
 
-    themeChanged: function() {
+    _themeChanged: function() {
+      if (!this.mirror) {return;}
       this.mirror.setOption('theme', this.theme);
     },
 
-    tabSizeChanged: function() {
+    _tabSizeChanged: function() {
+      if (!this.mirror) {return;}
       this.mirror.setOption('tabSize', this.tabSize);
     },
 
-    lineNumbersChanged: function() {
+    _lineNumbersChanged: function() {
+      if (!this.mirror) {return;}
       this.mirror.setOption('lineNumbers', this.lineNumbers);
-    },
-
-    focus: function() {
-      this.mirror.focus();
     }
 
   });
