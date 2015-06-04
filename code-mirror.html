@@ -1,0 +1,141 @@
+<link rel="import" href="../polymer/polymer.html">
+<link rel="import" href="code-mirror-import.html">
+<link rel="stylesheet" href="../codemirror/lib/codemirror.css">
+<link rel="stylesheet" href="../codemirror/theme/monokai.css">
+
+<!--
+`code-mirror` is a polymer element wrapping the codemirror text editor.
+
+Example:
+
+    <code-mirror>
+    </code-mirror>
+
+@element code-mirror
+@demo demo/index.html
+-->
+
+<dom-module is="code-mirror">
+
+  <!-- <link rel="import" type="css" href="../codemirror/lib/codemirror.css"> -->
+  <!-- <link rel="import" type="css" href="../codemirror/theme/ambiance.css">
+  <link rel="import" type="css" href="../codemirror/theme/ambiance-mobile.css">
+  <link rel="import" type="css" href="../codemirror/theme/blackboard.css">
+  <link rel="import" type="css" href="../codemirror/theme/cobalt.css">
+  <link rel="import" type="css" href="../codemirror/theme/eclipse.css">
+  <link rel="import" type="css" href="../codemirror/theme/elegant.css">
+  <link rel="import" type="css" href="../codemirror/theme/erlang-dark.css">
+  <link rel="import" type="css" href="../codemirror/theme/lesser-dark.css">
+  <link rel="import" type="css" href="../codemirror/theme/midnight.css">
+  <link rel="import" type="css" href="../codemirror/theme/monokai.css">
+  <link rel="import" type="css" href="../codemirror/theme/neat.css">
+  <link rel="import" type="css" href="../codemirror/theme/night.css">
+  <link rel="import" type="css" href="../codemirror/theme/rubyblue.css">
+  <link rel="import" type="css" href="../codemirror/theme/solarized.css">
+  <link rel="import" type="css" href="../codemirror/theme/twilight.css">
+  <link rel="import" type="css" href="../codemirror/theme/vibrant-ink.css">
+  <link rel="import" type="css" href="../codemirror/theme/xq-dark.css">
+  <link rel="import" type="css" href="../codemirror/theme/xq-light.css">
+  <link rel="import" type="css" href="../codemirror/addon/fold/foldgutter.css"> -->
+
+  <style>
+
+    :host {
+      display: block;
+      position: relative;
+    }
+
+    .CodeMirror {
+      position: absolute;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+    }
+
+  </style>
+
+  <template>
+  </template>
+
+</dom-module>
+
+<script>
+
+  Polymer({
+    is: 'code-mirror',
+
+    properties: {
+
+      value: {
+        type: String,
+        value: '<dom-module>\n</dom-module>'
+      },
+
+      mode: {
+        type: String,
+        value: 'htmlmixed'
+      },
+
+      theme: {
+        type: String,
+        value: 'monokai'
+      },
+
+      tabSize: {
+        type: Number,
+        value: 2
+      },
+
+      lineNumbers: {
+        type: Boolean,
+        value: false
+      }
+
+    },
+
+    ready: function() {
+      console.log(this);
+      this.mirror = CodeMirror(this, {
+        value: this.value,
+        mode: this.mode,
+        theme: this.theme,
+        tabSize: this.tabSize,
+        lineNumbers: this.lineNumbers,
+        foldGutter: true,
+        gutters: ["CodeMirror-linenumbers", "CodeMirror-foldgutter"]
+      });
+
+    },
+
+    refresh: function() {
+      this.mirror.refresh();
+    },
+
+    valueChanged: function() {
+      this.mirror.setValue(this.value);
+    },
+
+    modeChanged: function() {
+      this.mirror.setOption('mode', this.mode);
+    },
+
+    themeChanged: function() {
+      this.mirror.setOption('theme', this.theme);
+    },
+
+    tabSizeChanged: function() {
+      this.mirror.setOption('tabSize', this.tabSize);
+    },
+
+    lineNumbersChanged: function() {
+      this.mirror.setOption('lineNumbers', this.lineNumbers);
+    },
+
+    focus: function() {
+      this.mirror.focus();
+    }
+
+  });
+
+</script>
