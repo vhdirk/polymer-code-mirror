@@ -9,12 +9,11 @@
     "tests"
   ],
   "dependencies": {
-    "polymer": "Polymer/polymer#^1.0.0",
-    "codemirror": "~5.3.0"
+    "polymer": "Polymer/polymer#^1.0.5",
+    "codemirror": "~5.4.0"
   },
   "devDependencies": {
     "web-component-tester": "*",
-    "iron-component-page": "PolymerElements/iron-component-page#^1.0.0",
-    "webcomponentsjs": "webcomponents/webcomponentsjs#^0.7.0"
+    "iron-component-page": "PolymerElements/iron-component-page#^1.0.0"
   }
 }
